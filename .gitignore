@@ -2,6 +2,12 @@
 *.ap_
 
 # files for the dex VM
+=======
+# Built application files
+*.apk
+*.ap_
+
+# Files for the Dalvik VM
 *.dex
 
 # Java class files
@@ -10,6 +16,16 @@
 # generated files
 bin/
 gen/
+
+=======
+# Generated files
+bin/
+gen/
+
+# Gradle files
+.gradle/
+build/
+/*/build/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -36,3 +52,6 @@ build/
 .DS_Store
 
 *.keystore
+=======
+# Log Files
+*.log
