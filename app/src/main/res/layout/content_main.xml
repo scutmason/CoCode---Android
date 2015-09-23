@@ -102,6 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:padding="30dp"
         android:src="@mipmap/ic_refresh_white_48dp"
         app:backgroundTint="@color/primary"
         app:elevation="6dp"

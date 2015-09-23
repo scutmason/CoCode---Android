@@ -1,10 +1,16 @@
 package scutmason.com.helloworld;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,14 +23,19 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import scutmason.com.helloworld.Adatper.TopicsAdatper;
 import scutmason.com.helloworld.api.CocodeApi;
 import scutmason.com.helloworld.model.LastestModel;
+import scutmason.com.helloworld.model.Topic;
 
 public class MainActivity extends AppCompatActivity {
     public static final CocodeApi cocodeApi = CocodeFactory.getSingleton();
     private CompositeSubscription mCompositeSubscription;
-    @Bind(R.id.tv_main)
-    TextView tvMain;
+    @Bind(R.id.lv_main)
+    ListView lv;
+    private String[] mTitles;
+    // 填充到ViewPager中的Fragment
+    private List<Fragment> mFragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +46,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-       cocodeApi.getLatest().enqueue(new Callback<LastestModel>() {
-           @Override
-           public void onResponse(Response<LastestModel> response) {
-               String title = response.body().getTopicList().getTopics().get(1).getTitle();
-               tvMain.setText(title);
-           }
-
-           @Override
-           public void onFailure(Throwable t) {
-
-           }
-       });
+        mTitles = getResources().getStringArray(R.array.tab_titles);
+        mFragments = new ArrayList<>();
+        for (int i = 0; i < mTitles.length; i++) {
+            Bundle mBundle = new Bundle();
+            mBundle.putInt("flag", i);
+            MyFragment mFragment = new MyFragment();
+            mFragment.setArguments(mBundle);
+            mFragments.add(i, mFragment);
+        }
 
     }
 
