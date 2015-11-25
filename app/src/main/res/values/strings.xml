@@ -5,4 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="toolbar_title">Cocode！</string>
     <string name="error">发生未知错误</string>
+    <string name="unknown">不知道</string>
+    <string name="est">*</string>
 </resources>

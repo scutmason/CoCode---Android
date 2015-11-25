@@ -19,9 +19,9 @@ public class MyFragment extends android.support.v4.app.Fragment {
 
     private View mView;
     @Bind(R.id.id_swiperefreshlayout)
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.id_recyclerview)
-    private RecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +39,5 @@ public class MyFragment extends android.support.v4.app.Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 }

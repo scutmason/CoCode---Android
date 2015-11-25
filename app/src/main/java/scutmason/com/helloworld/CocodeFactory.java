@@ -10,8 +10,6 @@ public class CocodeFactory {
 
     protected static final Object monitor = new Object();
     static CocodeApi sSingleton = null;
-    public static final int meizhiSize = 10;
-    public static final int gankSize = 5;
 
     public static CocodeApi getSingleton() {
         synchronized (monitor) {

@@ -3,8 +3,12 @@ package scutmason.com.helloworld;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Type;
+
+import retrofit.CallAdapter;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
 import scutmason.com.helloworld.api.CocodeApi;
 
 /**
@@ -24,6 +28,7 @@ public class CocodeRetrofit {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://cocode.cc/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         service = retrofit.create(CocodeApi.class);
     }
