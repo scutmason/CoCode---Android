@@ -10,6 +10,7 @@
     app:cardCornerRadius="3dp">
 
     <LinearLayout
+        android:id="@+id/ll_topic"
         android:background="#11000000"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

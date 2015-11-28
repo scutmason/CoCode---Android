@@ -2,7 +2,6 @@ package scutmason.com.helloworld;
 
 import android.app.Application;
 
-import me.drakeet.library.CrashWoodpecker;
 
 /**
  * Created by Administrator on 2015/9/23.

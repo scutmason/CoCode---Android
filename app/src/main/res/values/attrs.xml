@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RichText">
+        <attr name="placeHolder" format="reference" />
+        <attr name="errorImage" format="reference" />
+        <attr name="default_width" format="dimension" />
+        <attr name="default_height" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="MaterialProgressBarSupport">
+        <attr name="progressSmallSize" format="boolean" />
+        <attr name="progressColor" format="color" />
+        <attr name="progressBackgroundColor" format="color" />
+    </declare-styleable>
+
+</resources>

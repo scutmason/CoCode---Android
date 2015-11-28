@@ -7,4 +7,7 @@
     <string name="error">发生未知错误</string>
     <string name="unknown">不知道</string>
     <string name="est">*</string>
+    <string name="topic_detial">主题详情</string>
+    <string name="app_loading_more">正在加载</string>
+    <string name="app_no_more_data">已经是最后</string>
 </resources>
