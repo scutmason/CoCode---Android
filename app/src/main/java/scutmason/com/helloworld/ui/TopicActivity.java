@@ -1,11 +1,13 @@
 package scutmason.com.helloworld.ui;
 
 import android.os.Bundle;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,8 +31,9 @@ import scutmason.com.helloworld.model.Post;
 import scutmason.com.helloworld.model.Topic;
 import scutmason.com.helloworld.model.TopicDetail;
 import scutmason.com.helloworld.model.User;
+import scutmason.com.helloworld.ui.swipeback.SwipeBackActivity;
 
-public class TopicActivity extends AppCompatActivity {
+public class TopicActivity extends SwipeBackActivity {
     public static final CocodeApi cocodeApi = CocodeFactory.getSingleton();
     public static final String CATEGORY = "category";
     public static final String TITLE = "TITLE";
@@ -79,14 +82,13 @@ public class TopicActivity extends AppCompatActivity {
                 topics = new ArrayList<>();
                 user = new ArrayList<>();
                 topicsAdapter = new TopicsAdapter(this, topics, user);
-                topicsAdapter.setHasMoreDataAndFooter(true, true);
+                rv.setAdapter(topicsAdapter);
                 rv.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) rv.getLayoutManager()) {
                     @Override
                     public void onLoadMore(int current_page) {
-                        getCategories(current_page);
+                        getCategories(current_page - 1);
                     }
                 });
-                rv.setAdapter(topicsAdapter);
                 getCategories(0);
                 break;
             case TOPICDETAIL:

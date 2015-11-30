@@ -3,4 +3,8 @@
     <color name="accent_material_light">#f7da64</color>
     <color name="line_color_run_speed_13">#ff2942</color>
     <color name="progress_background_light">#FFFAFAFA</color>
+    <color name="stand_bg">#fff6f6f6</color>
+    <item name="gray_drawable" type="drawable">#FF323A45</item>
+    <color name="font_black_2">#222222</color>
+    <color name="white">#ffffffff</color>
 </resources>

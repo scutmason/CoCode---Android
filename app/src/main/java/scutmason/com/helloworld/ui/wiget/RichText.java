@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
@@ -130,19 +131,21 @@ public class RichText extends TextView {
     private Html.ImageGetter asyncImageGetter = new Html.ImageGetter() {
         @Override
         public Drawable getDrawable(String source) {
-            String url;
-            if (source.startsWith("//cocode.cc")) {
-                url = "http:"+source;
-            }else {
-                url = "http://cocode.cc" + source;
+            String url = null;
+            if (!TextUtils.isEmpty(source)) {
+                if (source.startsWith("//cocode.cc")) {
+                    url = "http:" + source;
+                } else {
+                    url = "http://cocode.cc" + source;
+                }
             }
             final URLDrawable urlDrawable = new URLDrawable();
             Target target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                     Drawable drawable = new BitmapDrawable(getContext().getResources(), bitmap);
-                    drawable.setBounds(0, 0, (int) (bitmap.getWidth()*1.5f), (int) (bitmap.getHeight()*1.5f));
-                    urlDrawable.setBounds(0, 0, (int) (bitmap.getWidth()*1.5f), (int) (bitmap.getHeight()*1.5f));
+                    drawable.setBounds(0, 0, (int) (bitmap.getWidth() * 1.5f), (int) (bitmap.getHeight() * 1.5f));
+                    urlDrawable.setBounds(0, 0, (int) (bitmap.getWidth() * 1.5f), (int) (bitmap.getHeight() * 1.5f));
                     urlDrawable.setDrawable(drawable);
                     RichText.this.setText(getText());
                 }

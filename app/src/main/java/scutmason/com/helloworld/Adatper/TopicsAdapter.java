@@ -70,7 +70,7 @@ public class TopicsAdapter extends BaseLoadMoreRecyclerAdapter<Topic, TopicsAdap
 
     @Override
     public int getItemCount() {
-        return topics.size() - 1 + (hasFooter() ? 1 : 0);
+        return topics.size() + (hasFooter() ? 1 : 0);
     }
 
     class TopicVH extends RecyclerView.ViewHolder {
