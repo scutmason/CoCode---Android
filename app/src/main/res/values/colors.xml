@@ -7,4 +7,7 @@
     <item name="gray_drawable" type="drawable">#FF323A45</item>
     <color name="font_black_2">#222222</color>
     <color name="white">#ffffffff</color>
+
+    <color name="photo_crop_dim_color">#cc000000</color>
+    <color name="photo_crop_highlight_color">#fff</color>
 </resources>

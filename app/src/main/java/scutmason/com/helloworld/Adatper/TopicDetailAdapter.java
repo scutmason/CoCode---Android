@@ -1,6 +1,7 @@
 package scutmason.com.helloworld.adatper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import scutmason.com.helloworld.R;
 import scutmason.com.helloworld.model.Post;
+import scutmason.com.helloworld.ui.PhotoActivity;
+import scutmason.com.helloworld.ui.wiget.PhotoView;
 import scutmason.com.helloworld.ui.wiget.RichText;
 import scutmason.com.helloworld.utils.TimeTranslate;
 
@@ -120,6 +123,14 @@ public class TopicDetailAdapter extends BaseLoadMoreRecyclerAdapter<Post, TopicD
             super(itemView);
             if (itemView == mHeaderView) return;
             ButterKnife.bind(this, itemView);
+            tvContent.setOnImageClickListener(new RichText.OnImageClickListener() {
+                @Override
+                public void imageClicked(List<String> imageUrls, int position) {
+                    Intent intent = new Intent(context, PhotoActivity.class);
+                    intent.putExtra(PhotoActivity.PHOTO_DOWNLOAD_URL,imageUrls.get(position));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

@@ -10,8 +10,9 @@
     app:cardCornerRadius="3dp">
 
     <LinearLayout
+        android:clickable="true"
         android:id="@+id/ll_topic"
-        android:background="#11000000"
+        android:background="?android:attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="8dp"

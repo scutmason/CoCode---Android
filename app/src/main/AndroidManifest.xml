@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.TopicActivity"/>
+        <activity android:name=".ui.PhotoActivity"/>
     </application>
 
 </manifest>

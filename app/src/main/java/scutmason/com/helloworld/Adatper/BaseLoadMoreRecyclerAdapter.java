@@ -20,8 +20,8 @@ public abstract class BaseLoadMoreRecyclerAdapter<T, VH extends RecyclerView.Vie
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
     public static final int TYPE_FOOTER = 2;
-    private boolean hasFooter = true;//设置是否显示Footer
-    private boolean hasMoreData = true;//设置是否可以继续加载数据
+    private boolean hasFooter = false;//设置是否显示Footer
+    private boolean hasMoreData = false;//设置是否可以继续加载数据
 
 
     public static class FooterViewHolder extends RecyclerView.ViewHolder {

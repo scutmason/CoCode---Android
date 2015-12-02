@@ -1,13 +1,12 @@
 package scutmason.com.helloworld.ui;
 
 import android.os.Bundle;
-import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -46,6 +45,8 @@ public class TopicActivity extends SwipeBackActivity {
     RecyclerView rv;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.swipe_container)
+    SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<Topic> topics;
     private TopicsAdapter topicsAdapter;
     private String category;
@@ -55,6 +56,7 @@ public class TopicActivity extends SwipeBackActivity {
     private int pageSize;
     private TopicDetailAdapter tda;
     private ArrayList<Post> topicDetail;
+    private EndlessRecyclerOnScrollListener onScrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +85,22 @@ public class TopicActivity extends SwipeBackActivity {
                 user = new ArrayList<>();
                 topicsAdapter = new TopicsAdapter(this, topics, user);
                 rv.setAdapter(topicsAdapter);
-                rv.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) rv.getLayoutManager()) {
+                onScrollListener = new EndlessRecyclerOnScrollListener((LinearLayoutManager) rv.getLayoutManager()) {
                     @Override
                     public void onLoadMore(int current_page) {
                         getCategories(current_page - 1);
                     }
-                });
+                };
+                rv.addOnScrollListener(onScrollListener);
                 getCategories(0);
+                //下拉刷新
+                swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getCategories(0);
+                        onScrollListener.setCurrent_page(0);
+                    }
+                });
                 break;
             case TOPICDETAIL:
                 topicid = bundle.getInt(TOPICID);
@@ -97,7 +108,7 @@ public class TopicActivity extends SwipeBackActivity {
                 topicDetail = new ArrayList<>();
                 tda = new TopicDetailAdapter(this, topicDetail);
                 rv.setAdapter(tda);
-                rv.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) rv.getLayoutManager()) {
+                onScrollListener = new EndlessRecyclerOnScrollListener((LinearLayoutManager) rv.getLayoutManager()) {
                     @Override
                     public void onLoadMore(int current_page) {
                         if (current_page <= pageSize) {
@@ -107,11 +118,25 @@ public class TopicActivity extends SwipeBackActivity {
                             tda.setHasMoreData(false);
                         }
                     }
-                });
+                };
+                rv.addOnScrollListener(onScrollListener);
                 getTpoicDetail(topicid, 1);
+                swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getTpoicDetail(topicid, 1);
+                        onScrollListener.setCurrent_page(1);
+                    }
+                });
                 break;
         }
-
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeRefreshLayout.setProgressViewOffset(false, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     private void getTpoicDetail(int topicid, final int page) {
@@ -121,7 +146,7 @@ public class TopicActivity extends SwipeBackActivity {
                 .subscribe(new Subscriber<TopicDetail>() {
                     @Override
                     public void onCompleted() {
-
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
@@ -142,7 +167,9 @@ public class TopicActivity extends SwipeBackActivity {
                         if (pageSize > 1) {
                             tda.setHasMoreDataAndFooter(true, true);
                         }
-                        tda.setTitleText(topicDetail.getFancyTitle());
+                        if (page == pageSize) {
+                            tda.setHasMoreDataAndFooter(false, false);
+                        }
                         tda.notifyDataSetChanged();
                     }
                 });
@@ -155,7 +182,7 @@ public class TopicActivity extends SwipeBackActivity {
                 .subscribe(new Subscriber<LastestModel>() {
                     @Override
                     public void onCompleted() {
-
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override

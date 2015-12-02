@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
@@ -27,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import scutmason.com.helloworld.R;
+import scutmason.com.helloworld.utils.URLUtils;
 
 /**
  * Created by zzhoujay on 2015/7/21 0021.
@@ -131,14 +131,7 @@ public class RichText extends TextView {
     private Html.ImageGetter asyncImageGetter = new Html.ImageGetter() {
         @Override
         public Drawable getDrawable(String source) {
-            String url = null;
-            if (!TextUtils.isEmpty(source)) {
-                if (source.startsWith("//cocode.cc")) {
-                    url = "http:" + source;
-                } else {
-                    url = "http://cocode.cc" + source;
-                }
-            }
+            String url = URLUtils.imageUrlConverter(source);
             final URLDrawable urlDrawable = new URLDrawable();
             Target target = new Target() {
                 @Override
